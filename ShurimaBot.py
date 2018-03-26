@@ -1,4 +1,5 @@
 from Settings import API_KEY
+from Settings import TOKEN
 import requests
 import discord
 from discord.ext import commands
@@ -44,4 +45,4 @@ async def summoner(summoner_name):
         await shurima.say("{} : Unranked".format(name))
 
 
-shurima.run('NDI3ODAwNzQ2NTc1MTM0NzQw.DZr_7w.f2WLgSAkRtdnIpJRiF78O3rPxcQ')
+shurima.run(TOKEN)
