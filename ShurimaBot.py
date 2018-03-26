@@ -10,7 +10,7 @@ def get_info(summoner_name):
 
 
 def summoner():
-    summoner_name = input("Tapez votre nom d'invocateur : ")
+    summoner_name = input("Summoner Name : ")
     info = get_info(summoner_name)
     summoner_id = info["id"]
     url = 'https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/{}?api_key={}'.format(summoner_id, API_KEY)
