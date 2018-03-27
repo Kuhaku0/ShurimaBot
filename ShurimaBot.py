@@ -92,12 +92,14 @@ async def h(ctx):
                           "1. s.h \n"
                           "2. s.config \n"
                           "3. s.summoner [summoner_name] \n"
-                          "4. s.bestplayer")
+                          "4. s.add_summoner [summoner_name] \n"
+                          "5. s.bestplayer")
     else:
         await shurima.say("List of Command : \n"
                           "1. s.h \n"
                           "2. s.summoner [summoner_name] \n"
-                          "3. s.bestplayer")
+                          "3. s.bestplayer \n"
+                          "4. s.add_summoner [summoner_name]")
 
 
 @shurima.command(pass_context=True)
