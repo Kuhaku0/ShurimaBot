@@ -13,7 +13,7 @@ shurima = commands.Bot(command_prefix=bot_prefix)
 @shurima.event
 async def on_ready():
 
-    shurima.send_message(shurima.get_channel("427772573313531904"), "use commande s.h")
+    shurima.send_message(shurima.get_channel("427772573313531904"), "use command s.h")
 
 
 def get_info(summoner_name):
@@ -33,18 +33,22 @@ async def summoner(summoner_name):
     summoner_id = info["id"]
     url = 'https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/{}?api_key={}'\
         .format(summoner_id, API_KEY)
-    r = requests.get(url)
-    result = r.json()
+    result = requests.get(url).json()
 
     if result:
-        solo_q = "{} : Solo/Duo : Rank : {} {} | League Points : {} | Wins : {} | Losses {}".\
-            format(name, result[1]['tier'], result[1]['rank'], result[1]['leaguePoints'], result[1]['wins'],
-                   result[1]['losses'])
-        flex = "{} : Flex : Rank : {} {} | League Points : {} | Wins : {} | Losses {}".\
-            format(name, result[0]['tier'], result[0]['rank'], result[0]['leaguePoints'], result[0]['wins'],
-                   result[0]['losses'])
-        await shurima.say(solo_q)
-        await shurima.say(flex)
+        queue_type = ""
+        for i in result:
+            if i["queueType"] == 'RANKED_SOLO_5x5':
+                queue_type = "Solo/Duo"
+            elif i["queueType"] == 'RANKED_FLEX_SR':
+                queue_type = "Flex"
+            elif i["queueType"] == 'RANKED_FLEX_TT':
+                queue_type = "Flex 3c3"
+
+            ranking = "{} : {} : Rank : {} {} | League Points : {} | Wins : {} | Losses {}". \
+                format(name, queue_type, i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses'])
+
+            await  shurima.say(ranking)
     else:
         await shurima.say("{} : Unranked".format(name))
 
@@ -88,17 +92,7 @@ async def h(ctx):
 
 
 @shurima.command(pass_context=True)
-async def test(ctx):
-
-    test = ctx.message.server.roles
-    lst = ["Challenger"]
-    for i in test:
-        y = str(i)
-        if y in lst:
-            print('la')
-        else:
-            print(y)
-            print(lst)
-
+async def test():
+    await shurima.say("test function")
 
 shurima.run(TOKEN)
