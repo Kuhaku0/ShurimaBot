@@ -38,23 +38,23 @@ async def summoner(summoner_name):
     info = get_info(name)
     summoner_id = info["id"]
     summoner_level = info["summonerLevel"]
+    em = discord.Embed(title="{}".format(name), description="Level : {}".format(summoner_level))
+    
     url = 'https://euw1.api.riotgames.com/lol/league/v3/positions/by-summoner/{}?api_key={}'\
         .format(summoner_id, API_KEY)
     result = requests.get(url).json()
-    em = discord.Embed(title="{}".format(name), description="Level : {}".format(summoner_level))
 
     if result:
-        queue_type = ""
         for i in result:
             if i["queueType"] == 'RANKED_SOLO_5x5':
-                em.add_field(name="Solo/Duo", value="{} : Rank : {} {} | League Points : {} | Wins : {} | Losses {}"
-                             .format(queue_type, i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']))
+                em.add_field(name="Solo/Duo", value="Rank : {} {} \nLeague Points : {} \nWins : {} | Losses : {}"
+                             .format(i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']), inline=True)
             elif i["queueType"] == 'RANKED_FLEX_SR':
-                em.add_field(name="Flex 5c5", value="{} : Rank : {} {} | League Points : {} | Wins : {} | Losses {}"
-                             .format(queue_type, i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']))
+                em.add_field(name="Flex 5c5", value="Rank : {} {} \nLeague Points : {} \nWins : {} | Losses : {}"
+                             .format(i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']), inline=True)
             elif i["queueType"] == 'RANKED_FLEX_TT':
-                em.add_field(name="Flex 3c3", value="{} : Rank : {} {} | League Points : {} | Wins : {} | Losses {}"
-                             .format(queue_type, i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']))
+                em.add_field(name="Flex 3c3", value="Rank : {} {} \nLeague Points : {} \nWins : {} | Losses : {}"
+                             .format(i['tier'], i['rank'], i['leaguePoints'], i['wins'], i['losses']), inline=True)
     else:
         em.add_field(name="Unraked", value="None")
 
