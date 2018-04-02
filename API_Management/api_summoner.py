@@ -17,3 +17,4 @@ class Summoner:
 
     def get_summoner_id(self):
         return self.summoner_info["id"]
+
